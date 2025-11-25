@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javier Bonilla | Proyectos</title>
+    <style>
+        :root {
+            --primary-color: #2563eb; 
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;     
+            --card-bg: #ffffff;
+            --text-main: #1e293b;    
+            --text-secondary: #64748b; 
+            --header-bg: #1e293b; /* El color oscuro de tu captura */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        /* --- ESTILO 1: ENCABEZADO OSCURO (Restaurado) --- */
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 3rem 1rem; /* Un poco más de espacio para que luzca elegante */
+            text-align: center;
+        }
+
+        header h1 { 
+            margin: 0; 
+            font-size: 2.5rem; 
+            font-weight: 700;
+        }
+        
+        header p { 
+            color: #cbd5e1; 
+            margin-top: 0.5rem; 
+            font-size: 1.1rem; 
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem 1rem;
+        }
+
+        /* --- SECCIÓN INTRODUCTORIA (Restaurada) --- */
+        .intro-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-section h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* --- ESTILO 2: GRID Y TARJETAS NUEVAS --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            justify-content: center;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            /* Sombra suave */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e2e8f0;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Cabecera de imagen en la tarjeta */
+        .card-image-header {
+            height: 200px;
+            background-color: #cbd5e1;
+            position: relative;
+        }
+
+        .card-image-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-title {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.4rem;
+            color: var(--text-main);
+        }
+
+        .project-tagline {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* Botones */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            flex: 1;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: 1px solid var(--primary-color);
+        }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #cbd5e1;
+            color: var(--text-main);
+        }
+        .btn-outline:hover { 
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background-color: #f1f5f9;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Javier Bonilla</h1>
+        <p>Centro de documentación y desarrollo de proyectos</p>
+    </header>
+
+    <div class="container">
+        
+        <section class="intro-section">
+            <h2>Proyectos actuales</h2>
+            <p>
+                Bienvenido. Aquí encontrarás la documentación oficial, tutoriales paso a paso y
+                recursos técnicos de las aplicaciones y proyectos que se han desarrollado.
+            </p>
+        </section>
+
+        <div class="projects-grid">
+            
+            <article class="project-card">
+                <div class="card-image-header">
+                    <img src="Slide1.png" alt="App 1">
+                </div>
+                <div class="card-content">
+                    <h3 class="project-title">Training App ILM</h3>
+                    <div class="project-tagline">Entrenamiento / Power Apps</div>
+                    <p class="project-desc">
+                        Portal de entrenamiento para el registro y seguimiento de entrenamientos de personal de nuevo ingreso y personal de planta para su certificación.
+                    </p>
+                    <div class="btn-group">
+                        <a href="documents/training-app.html" class="btn btn-primary">Documentación</a>
+                        <a href="https://apps.powerapps.com/play/e/234f8e7d-53d3-ebf0-87fb-c37e8205ff1e/a/8bdfcb2c-4962-45c8-839c-ffb9d0f6fe41?tenantId=d28caf79-1762-4439-b64b-7842ea5985b7&hint=9d82c801-7d7c-4007-b37b-d8fe7815785b&sourcetime=1764107115233" class="btn btn-outline">Abrir</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="card-image-header">
+                    <img src="Slide2.png" alt="App 2">
+                </div>
+                <div class="card-content">
+                    <h3 class="project-title">Quality App ILM</h3>
+                    <div class="project-tagline">CALIDAD / Power Apps
+                    </div>
+                    <p class="project-desc">
+                        Portal de calidad para el seguimiento de acciones de contención y el llenado de diferentes formularios.
+                    </p>
+                    <div class="btn-group">
+                        <a href="index.html" class="btn btn-primary">Documentación</a>
+                        <a href="https://apps.powerapps.com/play/e/234f8e7d-53d3-ebf0-87fb-c37e8205ff1e/a/9cef2721-be91-4b60-b19b-e6b0abd5d8ed?tenantId=d28caf79-1762-4439-b64b-7842ea5985b7&hint=83e924a8-5c82-4e34-bc1e-557a77104b29&sourcetime=1764111894509" class="btn btn-outline">Abrir</a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="project-card">
+                <div class="card-image-header">
+                    <img src="Slide3.png" alt="App 3">
+                </div>
+                <div class="card-content">
+                    <h3 class="project-title">CRR ILM Dashboard</h3>
+                    <div class="project-tagline">CALIDAD / Power BI
+                    </div>
+                    <p class="project-desc">
+                        Panel de datos orientado al métrico de calidad de rechazos externos (CRR) para el analisís de la información.
+                    </p>
+                    <div class="btn-group">
+                        <a href="index.html" class="btn btn-primary">Documentación</a>
+                        <a href="https://app.powerbi.com/reportEmbed?reportId=523cb64f-756d-4171-90b4-76d16818fc10&autoAuth=true&ctid=f68e78e0-dcd8-4127-b767-8bec2c1438c4" class="btn btn-outline">Abrir</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="card-image-header">
+                    <img src="Slide4.png" alt="App 4">
+                </div>
+                <div class="card-content">
+                    <h3 class="project-title">ILM Certification Levels</h3>
+                    <div class="project-tagline">ENTRENAMIENTO / Power BI
+                    </div>
+                    <p class="project-desc">
+                        Panel de datos orientado al métrico de entrenamiento en los diferentes niveles de certificación (L1 → L3) para el analisís de la información.
+                    </p>
+                    <div class="btn-group">
+                        <a href="index.html" class="btn btn-primary">Documentación</a>
+                        <a href="https://app.powerbi.com/reportEmbed?reportId=ac855de5-35e7-41aa-93a2-effd0b11b514&autoAuth=true&ctid=f68e78e0-dcd8-4127-b767-8bec2c1438c4" class="btn btn-outline">Abrir</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="card-image-header">
+                    <img src="Slide5.png" alt="App 5">
+                </div>
+                <div class="card-content">
+                    <h3 class="project-title">Training Score Card</h3>
+                    <div class="project-tagline">ENTRENAMIENTO / Power BI
+                    </div>
+                    <p class="project-desc">
+                        Panel de datos para la visualización de los entrenamientos en curso y finalizados así como los porcentajes de avance y estatus.
+                    </p>
+                    <div class="btn-group">
+                        <a href="index.html" class="btn btn-primary">Documentación</a>
+                        <a href="https://app.powerbi.com/reportEmbed?reportId=6df1f43b-2033-468a-a17e-b44717c069e6&autoAuth=true&ctid=f68e78e0-dcd8-4127-b767-8bec2c1438c4" class="btn btn-outline">Abrir</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="card-image-header">
+                    <img src="Slide6.png" alt="App 6">
+                </div>
+                <div class="card-content">
+                    <h3 class="project-title">Panel de segundos cortes P1/P2</h3>
+                    <div class="project-tagline">CALIDAD / Power BI
+                    </div>
+                    <p class="project-desc">
+                        Panel de datos orientado al analisís de los segundos cortes generados en P1 y P2.
+                    </p>
+                    <div class="btn-group">
+                        <a href="index.html" class="btn btn-primary">Documentación</a>
+                        <a href="https://app.powerbi.com/reportEmbed?reportId=612a7db1-9c22-4a61-bbd4-4585615ccef8&autoAuth=true&ctid=f68e78e0-dcd8-4127-b767-8bec2c1438c4" class="btn btn-outline">Abrir</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Javier Bonilla. Alojado en GitHub Pages.</p>
+    </footer>
+
+</body>
+</html>

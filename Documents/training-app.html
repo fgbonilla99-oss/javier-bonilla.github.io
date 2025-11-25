@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training App Docs</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --sidebar-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-secondary: #64748b;
+            --header-bg: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- ENCABEZADO --- */
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        header h1 { font-size: 1.2rem; margin: 0; }
+        
+        /* Botón de volver */
+        .btn-back {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-back:hover { color: white; }
+
+        /* --- LAYOUT PRINCIPAL --- */
+        .main-layout {
+            display: flex;
+            flex: 1; /* Ocupa el resto de la altura */
+            overflow: hidden; /* Evita doble scroll */
+        }
+
+        /* --- BARRA LATERAL (MENÚ) --- */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            padding: 2rem 0;
+            flex-shrink: 0;
+        }
+
+        .menu-title {
+            padding: 0 1.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .menu-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-btn:hover {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+        }
+
+        /* Estado Activo del Menú */
+        .menu-btn.active {
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* --- ÁREA DE CONTENIDO --- */
+        .content-area {
+            flex: 1;
+            padding: 3rem 4rem;
+            overflow-y: auto; /* Scroll solo en el contenido */
+            background-color: white;
+        }
+
+        .tutorial-section {
+            display: none; /* Ocultamos todos por defecto */
+            max-width: 800px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Solo mostramos el que tenga la clase 'active' */
+        .tutorial-section.active {
+            display: block;
+        }
+
+        /* Estilos del contenido del tutorial */
+        h2 { color: var(--text-main); font-size: 2rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;}
+        h3 { margin-top: 2rem; color: #334155; }
+        p { line-height: 1.7; color: #475569; margin-bottom: 1rem; }
+        
+        /* Bloques de código o comandos */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        /* Imágenes dentro del tutorial */
+        .tutorial-img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column; overflow: auto; }
+            .sidebar { width: 100%; padding: 1rem 0; border-right: none; border-bottom: 1px solid var(--border-color); }
+            .content-area { padding: 2rem 1.5rem; }
+            body { height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Documentación: Training App ILM</h1> <a href="index.html" class="btn-back">← Volver al inicio</a>
+    </header>
+
+    <div class="main-layout">
+        
+        <nav class="sidebar">
+            <div class="menu-title">Empezando</div>
+            <button class="menu-btn active" onclick="openTab(event, 'tema1')">1. Introducción</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema2')">2. Instalación</button>
+            
+            <div class="menu-title" style="margin-top: 1.5rem;">Contenido</div>
+            <button class="menu-btn" onclick="openTab(event, 'tema3')">3. Inicio de Sesión</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema4')">4. Verificar Versión</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema5')">5. Registros</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema6')">6. Información del Registro</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema7')">7. Modificación del Registro</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema8')">8. Consulta de Personal</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema9')">9. Auditoría - Arranque De Turno</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema10')">10. Soporte técnico</button>
+        </nav>
+
+        <main class="content-area">
+
+            <div id="tema1" class="tutorial-section active">
+                <h2>1. Introducción a la aplicación Training App</h2>
+                <p>Bienvenido a la documentación oficial. Esta aplicación permite gestionar los registros de entrenamiento de manera eficiente.</p>
+                <img src="tna.png" class="tutorial-img" alt="Pantalla principal">
+                <h3>Detalles técnicos</h3>
+                <p>A continuación se muestra la ficha técnica de la app:</p>
+                <ul>
+                    <li><b>Sistema operativo: </b>Múltiplataforma (iOS y Android)</li>
+                    <li><b>Versión (Producción): </b>V1.2.2</li>
+                    <li><b>Power Apps Release Version: </b>3.25111.6 (live)</li>
+                    <li><b>Última actualización: </b>11-25-2025 7:39 UTC</li>
+                    <li><b>Entorno de desarrollo: </b>Microsoft Power Apps</li>
+                </ul>
+            </div>
+
+            <div id="tema2" class="tutorial-section">
+                <h2>2. Instalación y Primeros Pasos</h2>
+                <p>Para comenzar a utilizar la herramienta, sigue estos pasos sencillos:</p>
+                <h3>Requisitos Previos</h3>
+                <ul>
+                    <li>Tener el acceso a la aplicación en la cuenta principal de Microsoft 365 que esté en el dispositivo.</li>
+                    <li>Tener instalada la aplicación de Power Apps en el dispositivo.</li>
+                    <li>Conexión a internet estable.</li>
+                    <li>Credenciales de acceso local de la aplicación.</li>
+                </ul>
+                <h3>Paso a Paso</h3>
+                <p>1. Ubicar el icono de Power Apps en la tableta.</p>
+                <img src="m1.png" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Si es la primera vez que abres la aplicación de Power Apps, necesitaras iniciar sesión.</p>
+                <img src="m2.png" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Una vez dentro de la aplicación, selecciona la opción <b>Todas las aplicaciones </b>para visualizar la herramienta.</p>
+                <img src="m3.png" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Listo, ya puedes ingresar tus credenciales a la herramienta Training App y sacarle el máximo provecho.</p>
+                <img src="m4.png" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema3" class="tutorial-section">
+                <h2>3. Inicio de Sesión</h2>
+                <p>Para iniciar sesión en la herramienta, debes de ingresar tus credenciales donde se solicita.</p>
+                <p>El usuario por lo general, es el usuario de MII del entrenador y la contraseña es <b>entrenamiento123</b>". A partir de la versión 1.2.1 se puede ingresar tanto el usuario como la contraseña en mayusculas, minusculas y mixto.
+                Se debe de escribir el usuario y la contraseña sin espacios tanto al princio, enmedio y al final de cada palabra. Esto puede ser motivo de falla al intentar inciar sesión.</p>
+                <p>En caso de estar bien escritas las credenciales y aún así no poder iniciar sesión, mandar un correo a <b>francisco.gonzalez@ilm.com.mx </b> con los detalles del usuario, turno y una foto del problema presentado.</p>
+                <p>En caso de necesitar un usuario local, mandar un correo a <b>francisco.gonzalez@ilm.com.mx </b>con los siguientes detalles:</p>
+                <ul>
+                    <li>Número y nombre del empleado</li>
+                    <li>Fotografía del empleado (opcional)</li>
+                    <li>Usuario de MII (En caso de no contar con uno, comentarlo en el correo para asignarle uno)</li>
+                    <li>Planta, departamento y turno donde se ubicará el empleado</li>
+                </ul>
+                <p>Recibirás un correo con las credenciales creadas y listas para utilizar la herramienta.</p>
+                <img src="Slides/Slide4.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema4" class="tutorial-section">
+                <h2>4. Verificar Versión</h2>
+                <p>Es probable que algunas de las funciones no estén habilitadas en tu dispositivo a causa de una versión anterior. Para revisar la versión de la herrramienta, sigue los siguientes pasos: </p>
+                <p>1. Ubicar el icono de Power Apps en la tableta.</p>
+                <img src="m1.png" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Si es la primera vez que abres la aplicación de Power Apps, necesitaras iniciar sesión.</p>
+                <img src="m2.png" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Una vez dentro de la aplicación, selecciona la opción <b>Todas las aplicaciones </b>para visualizar la herramienta.</p>
+                <img src="Slides/Slide2.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Da clic en los 3 puntos que se encuentran a lado del campo de la herramienta.</p>
+                <img src="Slides/Slide5.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Se mostrará un menú con opciones, selecciona la opción <b>Detalles</b>.</p>
+                <img src="Slides/Slide6.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6. Se mostrará la información de la herrramienta, asegurse de tener la versión más nueva (Para revisar la versión actúal más nueva, ve al paso <b>1. Introducción</b>).</p>
+                <img src="Slides/Slide7.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>7. Si la versión no corresponde a la más reciente, finalizar la aplicación de Power Apps y volver a ingresar; esto ayuda a forzar la actualización.</p>
+                <img src="Slides/Slide8.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>8. Si la versión sí corresponde a la más reciente y aú así presentan problemas, favor de mandar un correo a <b>francisco.gonzalez@ilm.com.mx </b> con los detalles como número de tableta, usuario, turno y una foto del problema presentado. </p>
+            </div>
+
+            <div id="tema5" class="tutorial-section">
+                <h2>5. Registros</h2>
+                <p>La herramienta ofrece una variedad de registros con el proposito de dar el seguimiento correcto a los entrenamientos. Los registros son: </p>
+                <ul>
+                    <li>Alta de entrenamiento.</li>
+                    <li>Cantidades / Tiempo muerto.</li>
+                    <li>Baja de entrenamiento.</li>
+                    <li>Ideas Process Team + D.</li>
+                </ul>
+                <p>El usuario puede crear, modificar y cerrar los registros <b>n </b>cantidad de veces, pero no puede eliminarlos.</p>
+                <h3>Alta de entrenamientos</h3>
+                <p>Cuando se le asigna un entrenamiento al usuario, se debe de crear su registro en la herramienta con el fin de documentar el avance y cierre.
+                    El usuario tiene dos opciones de registro para dar de alta el entrenamiento.
+                </p>
+                <h4>Registro Normal</h4>
+                <p>Esta opción de registro es la convencional y brinda más detalles sobre el empleado a registrar. Para usar está ocpción: </p>
+                <p>1. En la pantalla de inicio, dar seleccionar el modulo <b>Registros </b>.</p>
+                <img src="Slides/Slide9.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Se mostrarán dos opciones, seleccionar <b>Registro</b>, se mostrará una pantalla donde deberemos de seleccionar el número de empleado para continuar: </p>
+                <img src="Slides/Slide10.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Ya seleccionado el número de empleado, se mostrará un formulario con los detalles del asociado (fotografía, nombre, departamento, fecha de ingreso, etc...) y los campos a llenar de su registro.
+                    En plantas como P2 y P5 se deberá de especificar el departamento en el cuál se llevará a cabo el entrenamiento, independientemente del departamento origen del empleado.
+                </p>
+                <img src="Slides/Slide11.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Cuando se llenen los datos correctamente, se habilitará el botón <b>Registrar</b>, seleccionarlo para finalizar el registro.</p>
+                <img src="Slides/Slide12.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Para ver el registro, regresar a la pantalla principal y seleccionar el modulo <b>Mi Portal</b>:</p>
+                <img src="Slides/Slide13.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6.  Si el registro no se visualiza correctamente, favor de mandar un correo a <b>francisco.gonzalez@ilm.com.mx </b> con los detalles como número de tableta, usuario, turno y una foto del problema presentado.</p>
+                
+                <h4>Quick Register</h4>
+                <p>Esta opción de registro es una alternativa más rápida pero con menos detalles de registar un entrenamiento: </p>
+                <p>1. En la pantalla de incio, dar seleccionar el modulo <b>Mi Portal </b>.</p>
+                <img src="Slides/Slide14.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Abrá un botón en la parte superior derecha de la pantalla <b>Quick Register </b>, al seleccionarlo se abrirá un formulario: </p>
+                <img src="Slides/Slide15.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Llenar con los datos del entrenamiento; en plantas como P2 y P5 se deberá de especificar el departamento en el cuál se llevará a cabo el entrenamiento, independientemente del departamento origen del empleado.</p>
+                <p>4. Cuando se llenen los datos correctamente, se habilitará el botón <b>Registrar</b>, seleccionarlo para finalizar el registro.</p>
+                <img src="Slides/Slide16.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. La pantalla se actualizará de manera automática y podrás visualizar el registro.</p>
+                <img src="Slides/Slide17.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6.  Si el registro no se visualiza correctamente, favor de mandar un correo a <b>francisco.gonzalez@ilm.com.mx </b> con los detalles como número de tableta, usuario, turno y una foto del problema presentado.</p>
+
+                <h4>Cantidades / Tiempo muerto</h4>
+                <p>Como parte del seguimiento para el entrenamiento, está la opción de <b>Cantidades</b> habilitada en cada registro activo del usuario.</p>
+                <p>1. En la pantalla de incio, dar seleccionar el modulo <b>Mi Portal </b>.</p>
+                <img src="Slides/Slide18.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Si tenemos registros activos, se visualizarán en forma de lista con sus opciones habilitadas, seleccionar la opción <b>Cantidades</b>.</p>
+                <img src="Slides/Slide19.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Se mostrará un menú en el que deberemos ingresar la información sobre el registro.</p>
+                <p>4. En el campo <b>Problemas</b> hay 8 opciones disponibles, por defecto la opción elegida es <i>Sin problemas</i>. Las otras opciones son: </p>
+                <ul>
+                    <li><b>A</b> - Material faltante / defectuoso</li>
+                    <li><b>B</b> - Mantenimiento</li>
+                    <li><b>C</b> - Juntas</li>
+                    <li><b>D</b> - Asociado en otra estación</li>
+                    <li><b>E</b> - Ausentismo</li>
+                    <li><b>F</b> - Actitud / Disciplina</li>
+                </ul>
+                <p>5. Ya seleccionada la opción más adecuada, se tiene que seleccionar la fecha en la que comienza el entrenamiento (por defecto se encuentra seleccionado el día en curso).</p>
+                <p>6. En el campo de <b>Cantidad</b> se deberá de ingresar las piezas realizadas al final del turno. Hay procesos que no son cuantificables, por lo que el valor a colocar deberá de ser 0.</p>
+                <p>7. Si la opción en el campo de <i>Problemas</i> es <i>Sin problemas</i>, no se deberá de ingresar tiempo muerto. Para todo problema se deberá de ingresar la cantidad en minutos de tiempo muerto (aprox).</p>
+                <img src="Slides/Slide20.PNG" class="tutorial-img" alt="Pantalla principal">
+
+                <h3>Baja de entrenamientos</h3>
+                <p>Un registro se puede dar de baja por tres razones principales</p>
+                <ul>
+                    <li>El asociado se certifica en el proceso una vez finalizado el periodo de entrenamiento correctamente.</li>
+                    <li>El asociado no se certifica en el proceso por mal desempeño durante el periodo de entrenamiento.</li>
+                    <li>El asociado no se certifica en el proceso por ausentismos durante el periodo de entrenamiento.</li>
+                </ul>
+                <p>Para los tres casos anteriores, es necesario dar de baja el registro, para ello:</p>
+                <p>1. En la pantalla de incio, dar seleccionar el modulo <b>Mi Portal </b>.</p>
+                <img src="Slides/Slide21.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Si tenemos registros activos, se visualizarán en forma de lista con sus opciones habilitadas, seleccionar la opción <b>Certificación</b>.</p>
+                <img src="Slides/Slide22.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Se mostrará un menú en el que deberemos ingresar la información sobre el registro.</p>
+                <p>4. Cambiar el estatus a <i>Certificado</i> o <i>No certificado</i> según corresponda el caso. Se habilitará el botón <b>+ Agregar</b>.</p>
+                <img src="Slides/Slide23.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Se pedirá tomarle fotografías a las hojas de seguimiento llenadas durante el transcurso del entrenamiento:</p>
+                <p>6. Una vez tomadas, regresar a la pantalla de <i>Certificación</i> y se habilitará el botón para guardar el registro.</p>
+                <p>7. El registro se dará de baja y ya no aparecerá en tu portal.</p>
+
+                <h3>Ideas Process Team + D</h3>
+                <p>Para el registro de las ideas generadas en el Process Team Digital, existe el modulo <b>Process Team</b>:</p>
+                <p>1. En la pantalla de incio, dar seleccionar el modulo <b>Process Team</b>.</p>
+                <img src="Slides/Slide24.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Se mostrará el formulario donde se deberán de llenar los campos solicitados.</p>
+                <img src="Slides/Slide25.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Una vez llenados, se habilitará el botón <b>Enviar Idea</b>, dar clic al botón para finalizar el formulario</p>
+            </div>
+
+            <div id="tema6" class="tutorial-section">
+                <h2>6. Información del Registro</h2>
+                <p>Durante el seguimiento de un entrenamiento, podemos visualizar la información que se ha ido registrando a través de las cantidades. Para visualizar está información:</p>
+                <p>1. En la pantalla de incio, dar seleccionar el modulo <b>Mi Portal</b>.</p>
+                <img src="Slides/Slide26.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Si tenemos registros activos, se visualizarán en forma de lista con sus opciones habilitadas, seleccionar la opción <b>Ramp Up's</b>.</p>
+                <img src="Slides/Slide27.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Se mostrará una pantalla con los datos del empleado, una gráfica del avance y una tabla con los datos día a día.</p>
+                <img src="Slides/Slide28.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Debido a que algunos procesos no cuentan con cantidades registradas o una meta definida, es probable que la gráfica y los porcentajes no se visualicen correctamente.</p>
+                <img src="Slides/Slide29.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema7" class="tutorial-section">
+                <h2>7. Modificación del registro</h2>
+                <p>Los registros se pueden modificar por el usuario, siendo las opciones habiles:</p>
+                <ul>
+                    <li>Estatus</li>
+                    <li>Fecha de registro</li>
+                    <li>Entrenador</li>
+                </ul>
+                <p>Para modificar estos campos:</p>
+                <p>1. En la pantalla de incio, dar seleccionar el modulo <b>Mi Portal</b>.</p>
+                <img src="Slides/Slide30.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Si tenemos registros activos, se visualizarán en forma de lista con sus opciones habilitadas, seleccionar la opción <b>Editar</b>.</p>
+                <img src="Slides/Slide31.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Es necesario modificar al menos un campos para poder guardar los datos.</p>
+                <img src="Slides/Slide32.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema8" class="tutorial-section">
+                <h2>8. Consulta de Personal</h2>
+                <p>La herramienta permite seleccionar entre 3 opciones diferentes de busqueda, dependiendo de la necesidad de la consulta:</p>
+                <ul>
+                    <li>Consulta por número de empleado.</li>
+                    <li>Consulta por nombre de empleado.</li>
+                    <li>Consulta por bloque de proceso.</li>
+                </ul>
+                <p>Para comenzar con la consulta, desde la página principal seleccionar el modulo <b>Consulta</b>.</p>
+                <h3>Consulta por número de empleado</h3>
+                <p>1. Dar clic en el icono del menú, se mostrarán las categorías antes mencionadas, seleccionar la opción <i>Número de empleado</i>.</p>
+                <img src="Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Se deberá de seleccionar un número de empleado en la lista desplegable o bien, buscarlo con ayuda del teclado.</p>
+                <img src="Slides/Slide34.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Cuando se selecciona un empleado, se mostará su información y los diferentes registros que tenga cargados.</p>
+                <img src="Slides/Slide35.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Al seleccionar un registro, se mostrarán las fotografías cargadas (en caso de no tener fotografías se mostrará el mensaje "Sin imagens cargadas").</p>
+                <img src="Slides/Slide36.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Para cerrar esa ventana, dar clic en cualquier parte de la pantalla. Se pueden seguir seleccionando otros empleados si es requerido.</p>
+                <img src="Slides/Slide37.PNG" class="tutorial-img" alt="Pantalla principal">
+                <h3>Consulta por nombre de empleado</h3>
+                <p>1. Dar clic en el icono del menú, se mostrarán las categorías antes mencionadas, seleccionar la opción <i>Nombre de empleado</i>.</p>
+                <img src="Slides/Slide38.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Se deberá de seleccionar un nombre de empleado en la lista desplegable o bien, buscarlo con ayuda del teclado.</p>
+                <img src="Slides/Slide39.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Cuando se selecciona un empleado, se mostará su información y los diferentes registros que tenga cargados.</p>
+                <img src="Slides/Slide40.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Al seleccionar un registro, se mostrarán las fotografías cargadas (en caso de no tener fotografías se mostrará el mensaje "Sin imagens cargadas").</p>
+                <img src="Slides/Slide41.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Para cerrar esa ventana, dar clic en cualquier parte de la pantalla. Se pueden seguir seleccionando otros empleados si es requerido.</p>
+                <img src="Slides/Slide42.PNG" class="tutorial-img" alt="Pantalla principal">
+                <h3>Consulta por bloque de procesos</h3>
+                <p>1. Dar clic en el icono del menú, se mostrarán las categorías antes mencionadas, seleccionar la opción <i>Bloque de procesos</i>.</p>
+                <img src="Slides/Slide43.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Para realizar la consulta, el modulo solicita 3 filtros.</p>
+                <img src="Slides/Slide44.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Se deberá de seleccionar un proceso en la lista desplegable o bien, buscarlo con ayuda del teclado.</p>
+                <img src="Slides/Slide45.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Se deberá de seleccionar un departamento en la lista desplegable o bien, buscarlo con ayuda del teclado (Solo P2 y P5).</p>
+                <img src="Slides/Slide46.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Se deberá de seleccionar un turno en la lista desplegable o bien, buscarlo con ayuda del teclado (Excepto P5).</p>
+                <img src="Slides/Slide47.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6. Cuando se completen los filtros, dar clic en el botón <b>Buscar</b> para iniciar la consulta.</p>
+                <img src="Slides/Slide48.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>7. El proceso puede tardar unos segundos en cargar dependiendo de la cantidad de empleados dados de alta con los filtros seleccionados.</p>
+                <img src="Slides/Slide49.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>8. Se mostrarán los empleados que cumplan con los filtros seleccionados en forma de lista.</p>
+                <img src="Slides/Slide50.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>9. Para inciar una nueva consulta, dar clic al botón <b>Limpiar</b> e iniciar desde el paso 2.</p>
+                <img src="Slides/Slide51.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema9" class="tutorial-section">
+                <h2>9. Auditoría - Arranque de Turno</h2>
+                <p>Este modulo permite reportar los hallazgos durante el inicio del turno de los empleados que estén en un proceso donde no tengan una certificación o entrenamiento activo.</p>
+                <p>Para realizar la auditoría:</p>
+                <p>1. En la pantalla de incio, dar seleccionar el modulo <b>Registros</b>.</p>
+                <img src="Slides/Slide52.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Seleccionar la opción <b>Auditoría</b>.</p>
+                <img src="Slides/Slide53.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. El primer paso es seleccionar el departamento en el que se realizará la auditoría (En el caso de P1 y P4, solo tienen una opción a alegir).</p>
+                <img src="Slides/Slide54.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. El segundo paso es seleccionar un nombre de empleado en la lista desplegable o bien, buscarlo con ayuda del teclado.</p>
+                <img src="Slides/Slide54.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. El tercer paso es dar clic al botón <b>Agregar</b> para agregarlo a una lista virtual.</p>
+                <img src="Slides/Slide55.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Puedes ir seleccionando más empleados en la lista desplegable y agregarlos a la lista vitual, esto para poder realizar los registros de manera masiva y no uno por uno.</p>
+                <img src="Slides/Slide56.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6. Cada empleado tiene las casillas de "Certificado" y "No certificado", según corresponda, seleccionar una opción.</p>
+                <img src="Slides/Slide57.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>7. Para visualizar las operaciones certificadas que tiene cada empleado, dar clic en el botón verde, se mostrará una ventana emergente con los registros del empleado.</p>
+                <img src="Slides/Slide58.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>8. En caso de seleccionar la opción "No certificado", se habilitará un campo de texto, donde se deberá de colocar el proceso en el cuál el empleado duen encontrado trabajando sin certificación.</p>
+                <img src="Slides/Slide59.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>9. Cuando todos los empleados en la lista virtual estén completados, se habilitará el botón <b>Enviar Auditoría</b>, dar clic al finalizar la auditoría.</p>
+                <img src="Slides/Slide60.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>10. Es importe recordar que la lista virtual no almacena la información de la auditoría hasta que seleccionamos el botón de guardado, por lo que si se cierra la herramienta o se sale de ese modulo
+                    no se guardará la información. 
+                </p>
+                <p>11. Aunque no hay un limite de auditorías por empleado al día, por cada auditoría no se pueden duplicar empleados en la lista virtual.</p>
+                <p>12. Este modulo envía un correo a cada encargado del departamento con los hallazgos encontrados durante el registro.</p>
+                <img src="Slides/Slide61.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema10" class="tutorial-section">
+                <h2>10. Soporte técnico</h2>
+                <p>Si durante el uso de la herramienta experimentas fallas técnicas como:</p>
+                <ul>
+                    <li><strong>Lentitud de la plataforma durante el uso</strong></li>
+                    <li><strong>No se guardan los registros correctamente</strong></li>
+                    <li><strong>Información erronea o duplicada</strong></li>
+                    <li><strong>Fallas en las funciones de la herramienta</strong></li>
+                    <li><strong>Entre otras...</strong></li>
+                    
+                </ul>
+                <p>Existe el modulo de soporte técnico.</p>
+                <p>1. En la pantalla principal, seleccionar el botón <b>Mandar solicitud</b>.</p>
+                <img src="Slides/Slide62.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Se mostrará un formulario con dos campos: <b>Asunto</b> y <b>Mensaje</b>.</p>
+                <img src="Slides/Slide63.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. El asunto y el mensaje deberán de ser lo más especificos posibles.</p>
+                <p>4. Una vez llenados los campos, se habilitará el botón <b>Enviar</b>, dar clic al botón para finalizar.</p>
+                <img src="Slides/Slide64.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Los tiempos de respuesta pueden variar dependiendo del tipo de problema. En cuanto sea posible se te notificará del estatus de tu reporte.</p>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function openTab(evt, topicId) {
+            // 1. Ocultar todos los contenidos
+            var contents = document.getElementsByClassName("tutorial-section");
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].className = contents[i].className.replace(" active", "");
+            }
+
+            // 2. Quitar la clase "active" de todos los botones del menú
+            var menuLinks = document.getElementsByClassName("menu-btn");
+            for (var i = 0; i < menuLinks.length; i++) {
+                menuLinks[i].className = menuLinks[i].className.replace(" active", "");
+            }
+
+            // 3. Mostrar el contenido actual y activar el botón clickeado
+            document.getElementById(topicId).className += " active";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
+</body>
+</html>
