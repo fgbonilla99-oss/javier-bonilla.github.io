@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality App Docs</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --sidebar-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-secondary: #64748b;
+            --header-bg: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- ENCABEZADO --- */
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        header h1 { font-size: 1.2rem; margin: 0; }
+        
+        /* Botón de volver */
+        .btn-back {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-back:hover { color: white; }
+
+        /* --- LAYOUT PRINCIPAL --- */
+        .main-layout {
+            display: flex;
+            flex: 1; /* Ocupa el resto de la altura */
+            overflow: hidden; /* Evita doble scroll */
+        }
+
+        /* --- BARRA LATERAL (MENÚ) --- */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            padding: 2rem 0;
+            flex-shrink: 0;
+        }
+
+        .menu-title {
+            padding: 0 1.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .menu-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-btn:hover {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+        }
+
+        /* Estado Activo del Menú */
+        .menu-btn.active {
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* --- ÁREA DE CONTENIDO --- */
+        .content-area {
+            flex: 1;
+            padding: 3rem 4rem;
+            overflow-y: auto; /* Scroll solo en el contenido */
+            background-color: white;
+        }
+
+        .tutorial-section {
+            display: none; /* Ocultamos todos por defecto */
+            max-width: 800px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Solo mostramos el que tenga la clase 'active' */
+        .tutorial-section.active {
+            display: block;
+        }
+
+        /* Estilos del contenido del tutorial */
+        h2 { color: var(--text-main); font-size: 2rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;}
+        h3 { margin-top: 2rem; color: #334155; }
+        p { line-height: 1.7; color: #475569; margin-bottom: 1rem; }
+        
+        /* Bloques de código o comandos */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        /* Imágenes dentro del tutorial */
+        .tutorial-img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column; overflow: auto; }
+            .sidebar { width: 100%; padding: 1rem 0; border-right: none; border-bottom: 1px solid var(--border-color); }
+            .content-area { padding: 2rem 1.5rem; }
+            body { height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Documentación: Quality App ILM</h1> <a href="https://fgbonilla99-oss.github.io/javier-bonilla.github.io/" class="btn-back">← Volver al inicio</a>
+    </header>
+
+    <div class="main-layout">
+        
+        <nav class="sidebar">
+            <div class="menu-title">Empezando</div>
+            <button class="menu-btn active" onclick="openTab(event, 'tema1')">1. Introducción</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema2')">2. Instalación</button>
+            
+            <div class="menu-title" style="margin-top: 1.5rem;">Contenido</div>
+            <button class="menu-btn" onclick="openTab(event, 'tema3')">3. Inicio de Sesión</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema4')">4. Verificar Versión</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema5')">5. Formatos</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema6')">A. Daily Check-List</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema7')">6. Contenciones</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema8')">A. Contenciones Honeycomb</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema9')">B. Contenciones Roller Retail</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema10')">C. Contenciones Banded Shades</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema11')">D. Contenciones Faux Wood</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema12')">E. Contenciones Shutters</button>
+            <button class="menu-btn" onclick="openTab(event, 'tema13')">10. Soporte técnico</button>
+        </nav>
+
+        <main class="content-area">
+
+            <div id="tema1" class="tutorial-section active">
+                <h2>1. Introducción a la aplicación Quality App</h2>
+                <p>Bienvenido a la documentación oficial. Esta aplicación permite gestionar los registros de calidad de manera eficiente.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/img/tna.png" class="tutorial-img" alt="Pantalla principal">
+                <h3>Detalles técnicos</h3>
+                <p>A continuación se muestra la ficha técnica de la app:</p>
+                <ul>
+                    <li><b>Sistema operativo: </b>Múltiplataforma (iOS y Android)</li>
+                    <li><b>Versión (Producción): </b>V1.0.4</li>
+                    <li><b>Power Apps Release Version: </b>3.25111.6 (live)</li>
+                    <li><b>Última actualización: </b>11-26-2025 7:33 UTC</li>
+                    <li><b>Entorno de desarrollo: </b>Microsoft Power Apps</li>
+                </ul>
+            </div>
+
+            <div id="tema2" class="tutorial-section">
+                <h2>2. Instalación y Primeros Pasos</h2>
+                <p>Para comenzar a utilizar la herramienta, sigue estos pasos sencillos:</p>
+                <h3>Requisitos Previos</h3>
+                <ul>
+                    <li>Tener el acceso a la aplicación en la cuenta principal de Microsoft 365 que esté en el dispositivo.</li>
+                    <li>Tener instalada la aplicación de Power Apps en el dispositivo.</li>
+                    <li>Conexión a internet estable.</li>
+                    <li>Credenciales de acceso local de la aplicación.</li>
+                </ul>
+                <h3>Paso a Paso</h3>
+                <p>1. Ubicar el icono de Power Apps en la tableta.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/img/m1.png" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Si es la primera vez que abres la aplicación de Power Apps, necesitaras iniciar sesión.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/img/m2.png" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Una vez dentro de la aplicación, selecciona la opción <b>Todas las aplicaciones </b>para visualizar la herramienta.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/img/m3.png" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Listo, ya puedes ingresar tus credenciales a la herramienta Quality App y sacarle el máximo provecho.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/img/m4.png" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema3" class="tutorial-section">
+                <h2>3. Inicio de Sesión</h2>
+                <p>Para iniciar sesión en la herramienta, debes de ingresar tus credenciales donde se solicita.</p>
+                <p>El usuario por lo general, es el usuario de MII del inspector/auditor y la contraseña es "<b>calidad123</b>". Se puede ingresar tanto el usuario como la contraseña en mayusculas, minusculas y mixto.
+                Se debe de escribir el usuario y la contraseña sin espacios tanto al princio, enmedio y al final de cada palabra. Esto puede ser motivo de falla al intentar inciar sesión.</p>
+                <p>En caso de estar bien escritas las credenciales y aún así no poder iniciar sesión, mandar un correo a <b>francisco.gonzalez@ilm.com.mx </b> con los detalles del usuario, turno y una foto del problema presentado.</p>
+                <p>En caso de necesitar un usuario local, mandar un correo a <b>francisco.gonzalez@ilm.com.mx </b>con los siguientes detalles:</p>
+                <ul>
+                    <li>Número y nombre del empleado</li>
+                    <li>Fotografía del empleado (opcional)</li>
+                    <li>Usuario de MII (En caso de no contar con uno, comentarlo en el correo para asignarle uno)</li>
+                    <li>Planta, departamento y turno donde se ubicará el empleado</li>
+                </ul>
+                <p>Recibirás un correo con las credenciales creadas y listas para utilizar la herramienta.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide4.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema4" class="tutorial-section">
+                <h2>4. Verificar Versión</h2>
+                <p>Es probable que algunas de las funciones no estén habilitadas en tu dispositivo a causa de una versión anterior. Para revisar la versión de la herrramienta, sigue los siguientes pasos: </p>
+                <p>1. Ubicar el icono de Power Apps en la tableta.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/img/m1.png" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Si es la primera vez que abres la aplicación de Power Apps, necesitaras iniciar sesión.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/img/m2.png" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Una vez dentro de la aplicación, selecciona la opción <b>Todas las aplicaciones </b>para visualizar la herramienta.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide2.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Da clic en los 3 puntos que se encuentran a lado del campo de la herramienta.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide5.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Se mostrará un menú con opciones, selecciona la opción <b>Detalles</b>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide6.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6. Se mostrará la información de la herrramienta, asegurse de tener la versión más nueva (Para revisar la versión actúal más nueva, ve al paso <b>1. Introducción</b>).</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide7.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>7. Si la versión no corresponde a la más reciente, finalizar la aplicación de Power Apps y volver a ingresar; esto ayuda a forzar la actualización.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide8.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>8. Si la versión sí corresponde a la más reciente y aú así presentan problemas, favor de mandar un correo a <b>francisco.gonzalez@ilm.com.mx </b> con los detalles como número de tableta, usuario, turno y una foto del problema presentado. </p>
+            </div>
+
+            <div id="tema5" class="tutorial-section">
+                <h2>5. Formatos</h2>
+                <p>Actualmente, la herramienta tiene disponible los siguientes formatos disponibles: </p>
+                <ul>
+                    <li>Daily Check List</li>
+                </ul>
+                <p>Los formatos tienen como flujo de proceso generar el registro en una base de datos y generar un correo con la información que se envia en una estructura definida (dependiendo del formato).</p>
+                <p>Para revisar la documentación de cada formato, ir al siguiente apartado.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide26.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema6" class="tutorial-section">
+                <h2>A. Daily Check-List</h2>
+                <p>Este formato está diseñado para reportar los hallazgos durante la auditoría de un proceso determinado. A través de un formulario, se llenan los campos y se envían los datos 
+                    a dos fases diferentes.
+                </p>
+                <p>Por un lado, se envía un correo con la información de la auditoría por correo. Existe la opción de adjuntar archivos a través del formulario (fotografías) a modo de evidencia.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide26.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>Después se manda la información a una base de datos almacenada en SharePoint con el fin de analizar los datos en busca de tendencias que ayuden a la toma de desiciones del departamento.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide26.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>Los pasos a seguir para el llenado correcto del formato son:</p>
+                <p>1. En la pantalla de incio, dar seleccionar el botón <b>+</b> :</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide26.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Se abrirá el formulario con los campos a llenar:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide27.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. El código de la orden deberá de ser escaneada directamente del ticket de trabajo o en su defecto, ingresar los 20 digitos manualmente, debido a que se extrae a partir de este campo 
+                    el dato de la orden y la linea del producto.
+                </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide28.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Algunos campos están ligados a las respuestas de otros campos, es decir, si un campo tiene una respuesta determinada es posible que el siguiente campo se encuentre habilitado o no:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide29.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Hay dos campos que no son obligarios (para el envío del formulario por lo menos):</p>
+                <ul>
+                    <li>Comentarios (Q21)</li>
+                    <li>Evidencia</li>
+                </ul>
+                <p>Estos campos pueden llenarse o no y no afectan al envió de la información.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide29.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6. Todos los demás campos deberán de llenarse para que se habilite el botón de enviar:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide29.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>7. Una vez habilitado el botón para enviar la información, se realizará el envío del correo y el guardado de la información de manera automática: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide29.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>8. Para regresar a la pantalla principal, dar clic en el botón <b>Salir</b> ubicado en la parte inferior derecha de la pantalla:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide29.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema7" class="tutorial-section">
+                <h2>6. Contenciones</h2>
+                <p>Este modulo permite registrar la información de las contenciones activas en el departamento que este registrado el inspector/auditor.</p>
+                <p>Cada contención consta de 3 partes:</p>
+                <ul>
+                    <li>Base de datos en SharePoint</li>
+                    <li>Formulario en la herramienta Quality App</li>
+                    <li>Panel de datos en Power BI Services</li>
+                </ul> 
+                <p>Los formularios pueden tener una estructura acorde a los requerimientos de cada contención; para revisar cada estructura, revisar los siguientes apartados.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide30.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema8" class="tutorial-section">
+                <h2>A. Contenciones Honeycomb</h2>
+                <p>Las contenciones activas del departamento son: </p>
+                <ul>
+                    <li>Tela estilo/color incorrecto</li>
+                    <li>Caída corta.</li>
+                    <li>Flejado correcto.</li>
+                    <li>Cordón roto</li>
+                </ul>
+                <h3>Tela color estilo/color incorrecto</h3>
+                <p>Para comenzar con la consulta, desde la página principal seleccionar el modulo <b>Consulta</b>.</p>
+                <p>1. Dar clic en el icono del menú, se mostrarán las categorías antes mencionadas, seleccionar la opción <i>Número de empleado</i>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                
+                <h3>Caída corta</h3>
+                <p>Para comenzar con la consulta, desde la página principal seleccionar el modulo <b>Consulta</b>.</p>
+                <p>1. Dar clic en el icono del menú, se mostrarán las categorías antes mencionadas, seleccionar la opción <i>Número de empleado</i>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+            
+                <h3>Flejado correcto</h3>
+                <p>Para comenzar con la consulta, desde la página principal seleccionar el modulo <b>Consulta</b>.</p>
+                <p>1. Dar clic en el icono del menú, se mostrarán las categorías antes mencionadas, seleccionar la opción <i>Número de empleado</i>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+            
+                <h3>Cordón roto</h3>
+                <p>Para comenzar con la consulta, desde la página principal seleccionar el modulo <b>Consulta</b>.</p>
+                <p>1. Dar clic en el icono del menú, se mostrarán las categorías antes mencionadas, seleccionar la opción <i>Número de empleado</i>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+             <div id="tema9" class="tutorial-section">
+                <h2>B. Contenciones Roller Retail</h2>
+                <p>Las contenciones activas del departamento son: </p>
+                <ul>
+                    <li>Revisión de AGL & Pinhole</li>
+                </ul>
+                <h3>Revisión de AGL & Pinhole</h3>
+                <p>Debido a que está contención no se llena por el inspector/auditor, la pagina de llenado es la siguiente:</p>
+                <div class="code-block">https://fgbonilla99-oss.github.io/nuevo.html</div>
+                <p>Una vez abierta la página en la terminar correspondiente:</p>
+                <p>1. Escanear el gafete del empleado y el código de la estación de trabajo, de lo contrario no permitirá el acceso:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Dar clic al botón de ingresar, se mostrará la siguiente pantalla:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Escanear el código del ticket de trabajo en el campo <b>Códio de ticket</b>:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. El siguiente campo corresponde a la inspección de pinhole, seleccionar la opción según corresponda:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. El siguiente campo corresponde a la inspección del sistema AGL, seleccionar la opción según corresponda: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6. En caso de que el campo de inspección de pinhole tenga como respuesta "<b>Si</b>", el último campo solicitará la ubicación del defecto,
+                 guíarse de la imagen mostrada en la pantalla.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>7. Si los datos fueron ingresados de manera correcta, se podrá enviar el formulario, en caso contrario, se mostrará un mensaje con el error: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>Para visualizar la contención, ir a la siguiente dirección: </p>
+                <div class="code-block">https://app.powerbi.com/reportEmbed?reportId=164eb957-2a7f-4c86-b94e-ce0e0bc876dd&autoAuth=true&ctid=f68e78e0-dcd8-4127-b767-8bec2c1438c4</div>
+                <p>Cualquier problema, reportarlo al correo <b>francisco.gonzalez@ilm.com.mx</b> para su seguimiento.</p>
+            </div>
+
+            <div id="tema10" class="tutorial-section">
+                <h2>B. Contenciones Banded Shades</h2>
+                <p>Las contenciones activas del departamento son: </p>
+                <ul>
+                    <li>Revisión de AGL</li>
+                </ul>
+                <h3>Revisión de AGL</h3>
+                <p>Debido a que está contención no se llena por el inspector/auditor, la pagina de llenado es la siguiente:</p>
+                <div class="code-block">https://fgbonilla99-oss.github.io/banded.html</div>
+                <p>Una vez abierta la página en la terminar correspondiente:</p>
+                <p>1. Escanear el gafete del empleado y el código de la estación de trabajo, de lo contrario no permitirá el acceso:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Dar clic al botón de ingresar, se mostrará la siguiente pantalla:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Escanear el código del ticket de trabajo en el campo <b>Códio de ticket</b>:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. El siguiente campo corresponde al estatus de la inspección, seleccionar la opción que corresponda:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. En el caso de seleccionar el estaus <b>Ok</b>, basta con dar clic al botón <b>Enviar Datos</b> para finalizar con el registro: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. En el caso de seleccionar el estaus <b>Retrabajo</b>, se desplegarán los campos siguientes campos: </p>
+                <ul>
+                    <li>Tipo de problema</li>
+                    <li>Configuración de motor ticket</li>
+                    <li>Nueva Configuración de motor</li>
+                </ul>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6. En <i>Tipo de problema</i> se especifica el problema que presenta el sistema AGL (Se baja | Se sube | No opera | Sube forzado):</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>7. En <i>Configuración de motor ticket</i> se especifica la configuración solicitada en el ticket de trabajo, seleccionar la opción correspondiente: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>8. En <i>Nueva Configuración de motor</i> se captura la nueva configuración de los motores colocados, seleccionar la opción correspondiente: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>8. En caso de que la nueva configuración no se encuentre en el listado, seleccionar la ocpción <b>Otro</b>, se desplegará un campo de texto donde deberás de introducir la configuración de los motores:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>9. Si los datos fueron ingresados de manera correcta, se podrá enviar el formulario, en caso contrario, se mostrará un mensaje con el error: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>Para visualizar la contención, ir a la siguiente dirección: </p>
+                <div class="code-block">https://app.powerbi.com/reportEmbed?reportId=533d57e0-efbc-447f-aa9f-312dae9a6104&autoAuth=true&ctid=f68e78e0-dcd8-4127-b767-8bec2c1438c4</div>
+                <p>Cualquier problema, reportarlo al correo <b>francisco.gonzalez@ilm.com.mx</b> para su seguimiento.</p>
+            </div>
+
+            <div id="tema11" class="tutorial-section">
+                <h2>C. Contenciones Faux Wood</h2>
+                <p>Las contenciones activas del departamento son: </p>
+                <ul>
+                    <li>Slat defectuoso</li>
+                </ul>
+                <h3>Slat defectuoso</h3>
+                <p>Para comenzar con la consulta, desde la página principal seleccionar el modulo <b>Consulta</b>.</p>
+                <p>1. Dar clic en el icono del menú, se mostrarán las categorías antes mencionadas, seleccionar la opción <i>Número de empleado</i>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+            </div>
+
+            <div id="tema12" class="tutorial-section">
+                <h2>D. Contenciones Shutters</h2>
+                <p>Las contenciones activas del departamento son: </p>
+                <ul>
+                    <li>Frame con defectos cosmeticos</li>
+                </ul>
+                <h3>Frame con defectos cosmeticos</h3>
+                <p>1. Para comenzar con la consulta, desde la página principal seleccionar el modulo <b>Contenciones</b>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Se mostrarán las contenciones activas en el departamento, seleccionar <i>Frame con defectos cosméticos</i>:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. Se mostrará el formulario a llenar para la contención:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>4. Escanear la etiqueta del Frame a inspeccionar o introducir el código de la pieza manualmente (Los campos <i>Número de orden</i> y <i>Línea</i> se llenan automáticamente ya que se haya ingresado el código de la orden):</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Seleccionar el estatus de la pieza inspeccionada:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>6. Si el estatus seleccionado es <b>Aceptado</b> se habilitará el botón para envíar los datos:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>7. Si el estatus seleccionado es <b>Rechazado</b> se mostrarán los campos con los detalles del hallazgo:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>8. En el campo de posición, seleccionar si el defecto se encuentra por la parte frontal o trasera de la pieza:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>9. En el campo de defecto, seleccionar la opción que mejor se ajuste al hallazgo, en caso de no encontrar una opción valida, seleccionar <b>Otro</b>, se habilitará el campo de texto <b>Defecto (otro)</b> donde se deberá de ingresar el defecto manualmente:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>10. De ser necesario, agregar comentarios en la sección <b>Comentarios</b>:</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>11. Para añadir una fotografía de evidencia, dar clic al icono de cámara, se abrirá una pantalla para tomar la fotografía: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>12. Si los datos fueron ingresados de manera correcta, se podrá enviar el formulario, en caso contrario, se mostrará un mensaje con el error: </p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide33.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>Para visualizar la contención, ir a la siguiente dirección: </p>
+                <div class="code-block">https://app.powerbi.com/reportEmbed?reportId=17067206-7cc6-4af0-bddd-7a6c8434fdcb&autoAuth=true&ctid=f68e78e0-dcd8-4127-b767-8bec2c1438c4</div>
+                <p>Cualquier problema, reportarlo al correo <b>francisco.gonzalez@ilm.com.mx</b> para su seguimiento.</p>
+            </div>
+
+            <div id="tema13" class="tutorial-section">
+                <h2>10. Soporte técnico</h2>
+                <p>Si durante el uso de la herramienta experimentas fallas técnicas como:</p>
+                <ul>
+                    <li><strong>Lentitud de la plataforma durante el uso</strong></li>
+                    <li><strong>No se guardan los registros correctamente</strong></li>
+                    <li><strong>Información erronea o duplicada</strong></li>
+                    <li><strong>Fallas en las funciones de la herramienta</strong></li>
+                    <li><strong>Entre otras...</strong></li>
+                    
+                </ul>
+                <p>Existe el modulo de soporte técnico.</p>
+                <p>1. En la pantalla principal, seleccionar el botón <b>Mandar solicitud</b>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide62.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>2. Se mostrará un formulario con dos campos: <b>Asunto</b> y <b>Mensaje</b>.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide63.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>3. El asunto y el mensaje deberán de ser lo más especificos posibles.</p>
+                <p>4. Una vez llenados los campos, se habilitará el botón <b>Enviar</b>, dar clic al botón para finalizar.</p>
+                <img src="https://raw.githubusercontent.com/fgbonilla99-oss/javier-bonilla.github.io/refs/heads/main/Slides/Slide64.PNG" class="tutorial-img" alt="Pantalla principal">
+                <p>5. Los tiempos de respuesta pueden variar dependiendo del tipo de problema. En cuanto sea posible se te notificará del estatus de tu reporte.</p>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function openTab(evt, topicId) {
+            // 1. Ocultar todos los contenidos
+            var contents = document.getElementsByClassName("tutorial-section");
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].className = contents[i].className.replace(" active", "");
+            }
+
+            // 2. Quitar la clase "active" de todos los botones del menú
+            var menuLinks = document.getElementsByClassName("menu-btn");
+            for (var i = 0; i < menuLinks.length; i++) {
+                menuLinks[i].className = menuLinks[i].className.replace(" active", "");
+            }
+
+            // 3. Mostrar el contenido actual y activar el botón clickeado
+            document.getElementById(topicId).className += " active";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
+</body>
+
+</html>
